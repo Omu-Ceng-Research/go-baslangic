@@ -1,0 +1,18 @@
+{
+  // VS Code + "Dev Containers" eklentisi: klasörü açın, "Reopen in Container" deyin.
+  "name": "Sistem Programlama (Go)",
+  "build": {
+    "dockerfile": "../docker/Dockerfile",
+    "context": "..",
+    "target": "temel"
+  },
+  "runArgs": ["--cap-add=SYS_PTRACE", "--hostname=sysprog"],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/kod,type=bind",
+  "workspaceFolder": "/kod",
+  "mounts": ["source=sysprog-calisma,target=/calisma,type=volume"],
+  "customizations": {
+    "vscode": {
+      "extensions": ["golang.go"]
+    }
+  }
+}

@@ -1,0 +1,95 @@
+# Docker imajını Intel/AMD (amd64) ve Apple Silicon (arm64) için derleyip
+# GitHub Container Registry'ye (ghcr.io) yükler.
+#
+# main dalına her push'ta :latest, v* etiketlerinde sürüm etiketi üretilir.
+# İlk yüklemeden sonra GitHub'da Packages > sysprog-go > Package settings
+# altından görünürlüğü "Public" yapın; yoksa öğrenciler indiremez.
+name: docker-imaj
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  imaj:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Önce derslerin derlendiğini ve testlerin geçtiğini kontrol et.
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./... && go build ./... && go test ./...
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Üç imaj aynı Dockerfile'ın üç katmanıdır ve katmanları paylaşır:
+      #   :latest  temel geliştirme ortamı           (~0.9 GB)
+      #   :model   + embedding modeli (koordinatör)   (~1.6 GB)
+      #   :llm     + cevap üreten dil modeli (bonus)  (~2.5 GB)
+      # v* etiketlerinde ayrıca :v1.0, :v1.0-model, :v1.0-llm üretilir.
+      - name: Etiketleri hesapla
+        id: etiket
+        run: |
+          IMG=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/sysprog-go
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            V=${GITHUB_REF_NAME}
+            echo "temel=$IMG:$V" >> "$GITHUB_OUTPUT"
+            echo "model=$IMG:$V-model" >> "$GITHUB_OUTPUT"
+            echo "llm=$IMG:$V-llm" >> "$GITHUB_OUTPUT"
+          else
+            echo "temel=$IMG:latest" >> "$GITHUB_OUTPUT"
+            echo "model=$IMG:model" >> "$GITHUB_OUTPUT"
+            echo "llm=$IMG:llm" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: temel
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: temel
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.etiket.outputs.temel }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: model
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: model
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.etiket.outputs.model }}
+          cache-from: type=gha
+
+      - name: llm
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: llm
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.etiket.outputs.llm }}
+          cache-from: type=gha
+
+      # Yayınlanan model imajında embedder'ın gerçekten çalıştığını doğrula.
+      - name: Model imajını test et
+        run: docker run --rm ${{ steps.etiket.outputs.model }} model-kontrol

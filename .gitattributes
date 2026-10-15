@@ -1,0 +1,5 @@
+# Windows'ta klonlanınca shell scriptleri CRLF'ye çevrilirse konteynerde çalışmaz.
+*.sh  text eol=lf
+*.go  text eol=lf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

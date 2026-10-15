@@ -1,0 +1,10 @@
+# Derslerin ürettiği dosyalar
+ders08-cikti/
+ders09-*.txt
+ders09-*.log
+ders10-vektorler.f32
+ders12-gunluk.log
+
+# go build ile üretilen binary'ler
+/d[0-9][0-9]
+/merhaba
