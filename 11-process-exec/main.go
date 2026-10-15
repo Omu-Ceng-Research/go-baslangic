@@ -4,11 +4,11 @@
 //
 // Çalıştır: go run ./11-process-exec
 //
-// Projede embedding modeli AYRI bir process olarak çalışacak. Düğümünüz onu
-// başlatacak, onunla pipe üzerinden konuşacak, çökerse yeniden başlatacak.
-// Bu ders, bunun küçük bir provası.
+// Projede embedding modeli AYRI bir process olarak çalışacaktır. Düğümünüz modeli
+// başlatacak, onunla pipe üzerinden konuşacak ve model çökerse yeniden başlatacaktır.
+// Bu ders, bunun küçük bir provasıdır.
 //
-// Program kendini "çocuk" modunda tekrar çalıştırır; harici bir araç gerekmez.
+// Program kendini "çocuk" modunda tekrar çalıştırmaktadır; harici bir araç gerekmemektedir.
 package main
 
 import (
@@ -25,7 +25,7 @@ import (
 )
 
 func main() {
-	// Çocuk modları: ebeveyn bizi os.Args[1] ile bu modlardan birinde başlatır.
+	// Çocuk modları: ebeveyn programı os.Args[1] ile bu modlardan birinde başlatmaktadır.
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "cocuk-servis":
@@ -44,7 +44,7 @@ func main() {
 	gozetmen()
 }
 
-// [1] En basit hâl: komutu çalıştır, çıktısını al. Altında fork/clone + execve vardır.
+// [1] En basit hâl: komutu çalıştır, çıktısını al. Altında fork/clone + execve bulunmaktadır.
 func basitKomut() {
 	cikti, err := exec.Command("uname", "-sr").Output()
 	fmt.Printf("[1] uname çıktısı: %s (hata: %v)\n", strings.TrimSpace(string(cikti)), err)
@@ -80,7 +80,7 @@ func pipeIleKonus() {
 		fmt.Printf("[3] %q -> %s", metin, cevap)
 	}
 
-	stdin.Close()     // çocuk EOF görür ve kendiliğinden çıkar
+	stdin.Close()     // çocuk EOF görmekte ve kendiliğinden çıkmaktadır
 	err := cmd.Wait() // wait4(2): zombi kalmasın
 	fmt.Println("[3] çocuk çıktı, hata:", err)
 }
@@ -103,7 +103,7 @@ func zamanAsimi() {
 }
 
 // [5] Gözetmen (supervisor): çocuk çökerse yeniden başlat.
-// Çocuğu her seferinde bilerek öldürüyoruz.
+// Çocuk her seferinde bilerek öldürülmektedir.
 func gozetmen() {
 	kendim, _ := os.Executable()
 	for deneme := 1; deneme <= 3; deneme++ {
@@ -122,8 +122,8 @@ func gozetmen() {
 	}
 }
 
-// cocukServis: stdin'den satır okur, sahte bir "embedding" döndürür.
-// Gerçek projede burada küçük bir dil modeli olacak.
+// cocukServis: stdin'den satır okumakta ve sahte bir "embedding" döndürmektedir.
+// Gerçek projede bu görevi küçük bir dil modeli üstlenecektir.
 func cocukServis() {
 	okuyucu := bufio.NewReader(os.Stdin)
 	for {

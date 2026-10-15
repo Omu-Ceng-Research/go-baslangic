@@ -2,10 +2,10 @@
 //
 // Çalıştır: go run ./07-pointer-bellek
 //
-// C'deki gibi & ve * vardır ama:
+// C'deki gibi & ve * bulunmaktadır ancak:
 //   - işaretçi aritmetiği YOKTUR (p++ yazamazsınız),
 //   - free() YOKTUR, çöp toplayıcı (GC) vardır,
-//   - yerel değişkenin adresini döndürmek GÜVENLİDİR (derleyici onu heap'e taşır).
+//   - yerel değişkenin adresini döndürmek GÜVENLİDİR (derleyici onu heap'e taşımaktadır).
 package main
 
 import (
@@ -19,17 +19,17 @@ type Vektor struct {
 	Deger [4]float32
 }
 
-// Değerle geçirme: struct kopyalanır, değişiklik dışarıya yansımaz.
+// Değerle geçirme: struct kopyalanmakta, değişiklik dışarıya yansımamaktadır.
 func normallestirKopya(v Vektor) {
 	v.Deger[0] = 0
 }
 
-// İşaretçiyle geçirme: asıl struct değişir.
+// İşaretçiyle geçirme: asıl struct değişmektedir.
 func normallestir(v *Vektor) {
-	v.Deger[0] = 0 // (*v).Deger[0] yazmaya gerek yok, Go otomatik çözer
+	v.Deger[0] = 0 // (*v).Deger[0] yazmaya gerek yoktur, Go bunu otomatik çözmektedir
 }
 
-// C'de bu fonksiyon tanımsız davranış (dangling pointer) olurdu. Go'da güvenli.
+// C'de bu fonksiyon tanımsız davranış (dangling pointer) olurdu. Go'da ise güvenlidir.
 func yeniVektor(id uint64) *Vektor {
 	v := Vektor{ID: id}
 	return &v
@@ -58,7 +58,7 @@ func main() {
 	const boyut, adet = 384, 1_000_000
 	fmt.Printf("384 x 1M float32 = %.2f GB\n", float64(boyut*adet*4)/(1<<30))
 
-	// Çöp toplayıcıyı gözlemleyelim.
+	// Çöp toplayıcının davranışı gözlemlenmektedir.
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	fmt.Printf("başlangıç heap: %d KB\n", m.HeapAlloc/1024)
@@ -68,7 +68,7 @@ func main() {
 	runtime.ReadMemStats(&m)
 	fmt.Printf("200 MB ayırdıktan sonra heap: %d MB\n", m.HeapAlloc/(1<<20))
 
-	buyuk = nil // referansı bıraktık
+	buyuk = nil // referans bırakıldı
 	runtime.GC()
 	runtime.ReadMemStats(&m)
 	fmt.Printf("GC sonrası heap: %d KB, GC sayısı: %d\n", m.HeapAlloc/1024, m.NumGC)

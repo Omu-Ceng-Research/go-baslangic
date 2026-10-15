@@ -5,7 +5,7 @@
 //
 // Goroutine, Java'daki Thread'in çok hafif hâlidir (birkaç KB yığın).
 // Binlercesini açmak sorun değildir. Go runtime bunları az sayıda işletim
-// sistemi thread'i üzerine dağıtır.
+// sistemi thread'i üzerine dağıtmaktadır.
 package main
 
 import (
@@ -58,8 +58,8 @@ func mutexOrnegi() {
 }
 
 // [3] Scatter-gather: projedeki sorgu akışının iskeleti.
-// Lider sorguyu tüm shard'lara AYNI ANDA gönderir, her shard kendi en iyi
-// k sonucunu döner, lider bunları birleştirip genel en iyi k'yı bulur.
+// Lider sorguyu tüm shard'lara AYNI ANDA göndermekte, her shard kendi en iyi
+// k sonucunu döndürmekte, lider de bunları birleştirip genel en iyi k sonucu bulmaktadır.
 type Sonuc struct {
 	Shard int
 	ID    int

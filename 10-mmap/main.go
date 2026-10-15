@@ -6,7 +6,7 @@
 //
 //	go run ./10-mmap -adet 300000    (daha büyük deneme)
 //
-// Bu ders projenin kalbidir: vektör deposunu böyle okuyacaksınız.
+// Bu ders projenin kalbidir: vektör deposu bu yöntemle okunacaktır.
 package main
 
 import (
@@ -48,7 +48,7 @@ func main() {
 	fmt.Println("ardından programı tekrar çalıştırın ve 'major fault' sayısına bakın.")
 }
 
-// olc: süreyi ve sayfa hatalarını (page fault) getrusage(2) ile ölçer.
+// olc: süreyi ve sayfa hatalarını (page fault) getrusage(2) ile ölçmektedir.
 func olc(ad string, f func() (int, float32)) {
 	var once, sonra syscall.Rusage
 	syscall.Getrusage(syscall.RUSAGE_SELF, &once)
@@ -64,7 +64,7 @@ func olc(ad string, f func() (int, float32)) {
 }
 
 func readIleAra(yol string, sorgu []float32) (int, float32) {
-	ham, err := os.ReadFile(yol) // tüm dosya heap'e kopyalanır
+	ham, err := os.ReadFile(yol) // tüm dosya heap'e kopyalanmaktadır
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +80,7 @@ func mmapIleAra(yol string, sorgu []float32) (int, float32) {
 	bilgi, _ := f.Stat()
 
 	// mmap(2): dosyayı salt okunur ve paylaşımlı olarak belleğe eşle.
-	// Henüz hiçbir bayt okunmadı! Sayfalar ancak dokunulduğunda yüklenir (page fault).
+	// Bu noktada henüz hiçbir bayt okunmamıştır! Sayfalar ancak dokunulduğunda yüklenmektedir (page fault).
 	ham, err := syscall.Mmap(int(f.Fd()), 0, int(bilgi.Size()),
 		syscall.PROT_READ, syscall.MAP_SHARED)
 	if err != nil {
@@ -89,20 +89,20 @@ func mmapIleAra(yol string, sorgu []float32) (int, float32) {
 	defer syscall.Munmap(ham)
 
 	// madvise(2): çekirdeğe "baştan sona sırayla okuyacağım" ipucu ver.
-	// Çekirdek buna göre ileriye dönük okuma (readahead) yapar.
+	// Çekirdek buna göre ileriye dönük okuma (readahead) yapmaktadır.
 	syscall.Madvise(ham, syscall.MADV_SEQUENTIAL)
 
 	return enYakin(baytlariFloataCevir(ham), sorgu)
 }
 
 // []byte'ı kopyalamadan []float32 olarak görmek.
-// unsafe: aynı bellek bölgesine farklı tipte bakıyoruz (C'deki (float*)ptr cast'i).
-// Not: makinenin little-endian olduğunu varsayar (x86-64 ve ARM64 öyledir).
+// unsafe: aynı bellek bölgesine farklı bir tiple bakılmaktadır (C'deki (float*)ptr cast'i).
+// Not: makinenin little-endian olduğunu varsaymaktadır (x86-64 ve ARM64 little-endian'dır).
 func baytlariFloataCevir(b []byte) []float32 {
 	return unsafe.Slice((*float32)(unsafe.Pointer(&b[0])), len(b)/4)
 }
 
-// enYakin: brute-force arama. Her vektörle iç çarpım (dot product) hesaplar.
+// enYakin: brute-force arama. Her vektörle iç çarpım (dot product) hesaplanmaktadır.
 func enYakin(tum []float32, sorgu []float32) (int, float32) {
 	enIyiID, enIyiSkor := -1, float32(math.Inf(-1))
 	adet := len(tum) / boyut
@@ -155,9 +155,9 @@ func rastgeleVektor(r *rand.Rand) []float32 {
 }
 
 // SORULAR:
-//  1) İki yöntem aynı id'yi buluyor mu? Bulmalı. Bulmuyorsa neden?
+//  1) İki yöntem aynı id'yi buluyor mu? Bulmalıdır. Bulmuyorsa neden?
 //  2) Hangi yöntemde minor fault daha çok? Neden? (İpucu: ReadFile'ın ayırdığı
-//     yeni heap belleği de ilk dokunuşta page fault üretir.)
+//     yeni heap belleği de ilk dokunuşta page fault üretmektedir.)
 //  3) /usr/bin/time -v ./d10 ile "Maximum resident set size" değerine bakın.
 //     Dosyadan büyük bir RAM'e sahip olmasaydınız hangi yöntem hâlâ çalışırdı?
 //  4) strace -e trace=mmap,munmap,madvise,read ./d10 çıktısında kendi mmap

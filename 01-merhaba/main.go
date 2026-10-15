@@ -4,8 +4,8 @@
 // Derle:      go build -o merhaba ./01-merhaba && ./merhaba
 //
 // C bilen için:    #include yerine import, main() yerine package main + func main().
-// Java bilen için: sınıf yok, JVM yok. Çıktı tek bir native binary'dir.
-// Ruby bilen için: yorumlanmaz, önce derlenir (go run bunu sizin yerinize yapar).
+// Java bilen için: sınıf ve JVM bulunmamaktadır. Çıktı tek bir native binary'dir.
+// Ruby bilen için: kod yorumlanmamakta, önce derlenmektedir (go run bunu sizin yerinize yapmaktadır).
 package main
 
 import (
@@ -17,7 +17,7 @@ import (
 func main() {
 	fmt.Println("Merhaba, Go!")
 
-	// Printf, C'deki printf ile aynı mantık. %v "ne olursa yaz" demektir.
+	// Printf, C'deki printf ile aynı mantıkla çalışmaktadır. %v "ne olursa yaz" anlamına gelmektedir.
 	fmt.Printf("Go sürümü: %s, işletim sistemi: %s, mimari: %s\n",
 		runtime.Version(), runtime.GOOS, runtime.GOARCH)
 

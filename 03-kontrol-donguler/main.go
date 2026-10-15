@@ -31,7 +31,7 @@ func main() {
 		fmt.Println("range 3, i =", i)
 	}
 
-	// 5) Sonsuz döngü + break/continue. Sunucularda sık görürsünüz.
+	// 5) Sonsuz döngü + break/continue. Sunucularda sıkça kullanılmaktadır.
 	n := 0
 	for {
 		n++
@@ -44,12 +44,12 @@ func main() {
 		fmt.Println("tek sayı:", n)
 	}
 
-	// 6) if'in içinde kısa tanımlama: değişken sadece if bloğunda yaşar.
+	// 6) if'in içinde kısa tanımlama: değişken sadece if bloğunda yaşamaktadır.
 	if kalan := 10 % 3; kalan != 0 {
 		fmt.Println("10 % 3 =", kalan)
 	}
 
-	// 7) switch: break yazmaya gerek yok, case'ler birbirine düşmez.
+	// 7) switch: break yazmaya gerek yoktur, case'ler birbirine düşmemektedir.
 	komut := "GET"
 	switch komut {
 	case "SET":
@@ -60,7 +60,7 @@ func main() {
 		fmt.Println("bilinmeyen komut")
 	}
 
-	// İfadesiz switch: uzun if-else zincirlerinin yerine geçer.
+	// İfadesiz switch: uzun if-else zincirlerinin yerine geçmektedir.
 	gecikmeMs := 120
 	switch {
 	case gecikmeMs < 50:
@@ -71,9 +71,9 @@ func main() {
 		fmt.Println("yavaş")
 	}
 
-	// 8) defer: fonksiyon bitince çalışır, LIFO sırasıyla.
+	// 8) defer: fonksiyon bittiğinde LIFO sırasıyla çalışmaktadır.
 	// Java'daki finally'nin, C'deki goto cleanup kalıbının karşılığı.
-	// Dosya ve soket kapatmada sürekli kullanacağız.
+	// Dosya ve soket kapatmada sürekli kullanılacaktır.
 	defer fmt.Println("defer 1 (en son çalışır)")
 	defer fmt.Println("defer 2")
 	fmt.Println("main bitiyor...")

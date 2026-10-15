@@ -10,8 +10,8 @@
 //   - başka terminalden: kill -9 <pid>        (SIGKILL: yakalanamaz! ne oldu?)
 //
 // Bir sunucu kapanırken yarım kalan yazmaları bitirmeli, dosyaları kapatmalıdır.
-// Ama SIGKILL ve elektrik kesintisi bu şansı vermez. Projede neden WAL ve
-// fsync kullanacağımızın sebebi budur.
+// Ancak SIGKILL ve elektrik kesintisi bu şansı vermemektedir. Projede WAL ve
+// fsync kullanılmasının sebebi budur.
 package main
 
 import (
@@ -33,7 +33,7 @@ func main() {
 	}
 	w := bufio.NewWriter(f)
 
-	// Sinyaller bir channel'a teslim edilir (ders 13'te channel'ları göreceğiz).
+	// Sinyaller bir channel'a teslim edilmektedir (channel'lar ders 13'te ele alınacaktır).
 	sinyaller := make(chan os.Signal, 1)
 	signal.Notify(sinyaller, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1)
 
@@ -45,7 +45,7 @@ func main() {
 		select {
 		case <-tik.C:
 			yazilan++
-			fmt.Fprintf(w, "kayıt %d\n", yazilan) // tamponda bekliyor, henüz diske değil!
+			fmt.Fprintf(w, "kayıt %d\n", yazilan) // tamponda beklemektedir, henüz diske yazılmamıştır!
 
 		case s := <-sinyaller:
 			switch s {

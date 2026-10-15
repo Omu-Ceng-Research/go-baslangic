@@ -4,13 +4,13 @@
 //
 // Çalıştır: go run ./09-sistem-cagrilari     (Linux veya WSL2)
 //
-// Ders 08'de os.Create, f.Write gibi üst seviye fonksiyonlar kullandık.
-// Onların altında open(2), write(2), close(2) sistem çağrıları vardır.
-// Burada aynı çağrıları "syscall" paketiyle doğrudan yapıyoruz.
-// C'de yazacağınız kodun neredeyse birebir aynısı.
+// Ders 08'de os.Create, f.Write gibi üst seviye fonksiyonlar kullanılmıştı.
+// Onların altında open(2), write(2), close(2) sistem çağrıları bulunmaktadır.
+// Bu derste aynı çağrılar "syscall" paketiyle doğrudan yapılmaktadır.
+// Kod, C'de yazılacak kodun neredeyse birebir aynısıdır.
 //
 // Not: syscall paketi standart kütüphanededir. Projede onun güncel hâli olan
-// golang.org/x/sys/unix paketini kullanacağız; fonksiyon isimleri aynıdır.
+// golang.org/x/sys/unix paketi kullanılacaktır; fonksiyon isimleri aynıdır.
 package main
 
 import (
@@ -71,7 +71,7 @@ func hamDosyaIslemleri() {
 	fmt.Printf("[2] fstat: boyut=%d bayt, inode=%d, blok=%d\n", st.Size, st.Ino, st.Blocks)
 }
 
-// [3] Hatalar errno olarak gelir. C'deki perror() çıktısıyla karşılaştırın.
+// [3] Hatalar errno olarak gelmektedir. C'deki perror() çıktısıyla karşılaştırın.
 func errnoOrnegi() {
 	_, err := syscall.Open("/root/gizli", syscall.O_RDONLY, 0)
 	var errno syscall.Errno
@@ -82,9 +82,9 @@ func errnoOrnegi() {
 	fmt.Println("[3] ENOENT mi?", err == syscall.ENOENT)
 }
 
-// [4] write(2) veriyi diske değil, çekirdeğin sayfa önbelleğine (page cache) yazar.
-// Verinin gerçekten diske ulaştığından emin olmak için fsync(2) gerekir.
-// Bunun bir bedeli vardır. Ölçelim:
+// [4] write(2) veriyi diske değil, çekirdeğin sayfa önbelleğine (page cache) yazmaktadır.
+// Verinin gerçekten diske ulaştığından emin olmak için fsync(2) gerekmektedir.
+// Bunun bir bedeli vardır; aşağıda bu bedel ölçülmektedir:
 func fsyncMaliyeti() {
 	const adet = 200
 	kayit := []byte("SET 1 kalıcı olmalı\n")
@@ -117,7 +117,7 @@ func fsyncMaliyeti() {
 	os.Remove("ders09-her-kayitta-fsync.log")
 }
 
-// C tarzı sıfırla biten diziyi Go string'ine çevirir.
+// C tarzı sıfırla biten diziyi Go string'ine çevirmektedir.
 // (Generic: Utsname alanları amd64'te int8, bazı ARM'larda uint8'dir.)
 func cString[T int8 | uint8](b []T) string {
 	s := make([]byte, 0, len(b))

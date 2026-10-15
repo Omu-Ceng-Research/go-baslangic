@@ -41,13 +41,13 @@ func TestNormallestir(t *testing.T) {
 	}
 
 	sifir := []float32{0, 0}
-	Normallestir(sifir) // panik yapmamalı, NaN üretmemeli
+	Normallestir(sifir) // panik yapmamalı ve NaN üretmemelidir
 	if sifir[0] != 0 {
 		t.Errorf("sıfır vektör değişmemeli, %v bulundu", sifir)
 	}
 }
 
-// İki gerçeklemenin rastgele girdilerde aynı sonucu verdiğini kontrol et.
+// İki gerçeklemenin rastgele girdilerde aynı sonucu verdiği kontrol edilmektedir.
 // float32 toplama sırası değişince sonuç birkaç bit farklı çıkabilir!
 func TestGerceklemelerTutarli(t *testing.T) {
 	r := rand.New(rand.NewSource(1))
@@ -66,7 +66,7 @@ func rastgele(r *rand.Rand, n int) []float32 {
 	return v
 }
 
-// Benchmark: Go, b.N değerini süre anlamlı olana kadar kendisi büyütür.
+// Benchmark: Go, b.N değerini süre anlamlı olana kadar kendisi büyütmektedir.
 func BenchmarkIcCarpim(b *testing.B) {
 	r := rand.New(rand.NewSource(1))
 	x, y := rastgele(r, 384), rastgele(r, 384)

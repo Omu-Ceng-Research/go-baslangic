@@ -48,8 +48,8 @@ func main() {
 			log.Print(err)
 			continue
 		}
-		// Her bağlantı için bir goroutine. Java'daki "new Thread" kalıbının
-		// karşılığı ama çok daha ucuz. Arka planda Go, epoll(7) kullanır.
+		// Her bağlantı için bir goroutine açılmaktadır. Bu, Java'daki "new Thread"
+		// kalıbının karşılığıdır ancak çok daha ucuzdur. Go arka planda epoll(7) kullanmaktadır.
 		go s.istemciyeHizmet(conn)
 	}
 }
@@ -110,7 +110,7 @@ func (s *Sunucu) isle(satir string) (cevap string, devam bool) {
 }
 
 // ALIŞTIRMALAR:
-//  1) Veriler RAM'de; sunucu kapanınca kayboluyor. Ders 08/09'daki bilgilerle
+//  1) Veriler RAM'de tutulmakta ve sunucu kapandığında kaybolmaktadır. Ders 08/09'daki bilgilerle
 //     her SET'i bir log dosyasına ekleyin, açılışta log'u okuyup map'i doldurun.
 //  2) "OK" cevabını fsync'ten önce mi, sonra mı vermelisiniz?
 //  3) strace -f -e trace=network,epoll_wait,epoll_ctl ./d14 ile bir istemci

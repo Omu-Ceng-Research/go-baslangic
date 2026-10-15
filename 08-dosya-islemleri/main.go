@@ -1,7 +1,7 @@
 // Ders 08 — Dosya işlemleri: metin, satır satır okuma, buffered/unbuffered, ikili veri
 //
 // Çalıştır: go run ./08-dosya-islemleri
-// Çıktılar ./ders08-cikti/ klasörüne yazılır.
+// Çıktılar ./ders08-cikti/ klasörüne yazılmaktadır.
 package main
 
 import (
@@ -60,7 +60,7 @@ func satirSatirOku() {
 	}
 }
 
-// [3] Buffered ve unbuffered yazma. Aynı veriyi iki şekilde yazıyoruz.
+// [3] Buffered ve unbuffered yazma. Aynı veri iki şekilde yazılmaktadır.
 // Fark nereden geliyor? -> write(2) sistem çağrısı sayısından.
 func bufferedKarsilastir() {
 	const kayitSayisi = 100_000
@@ -78,7 +78,7 @@ func bufferedKarsilastir() {
 	f.Close()
 	sureUnbuf := time.Since(basla)
 
-	// Buffered: bufio 4 KB'lık bir tampon doldurur, dolunca tek write(2) yapar.
+	// Buffered: bufio 4 KB'lık bir tampon doldurmakta, tampon dolduğunda tek write(2) yapmaktadır.
 	basla = time.Now()
 	f, err = os.Create(filepath.Join(klasor, "buffered.log"))
 	if err != nil {
@@ -88,7 +88,7 @@ func bufferedKarsilastir() {
 	for range kayitSayisi {
 		w.Write(kayit)
 	}
-	w.Flush() // UNUTMAYIN: Flush yoksa tampondaki son veri diske gitmez!
+	w.Flush() // UNUTMAYIN: Flush yoksa tampondaki son veri diske gitmemektedir!
 	f.Close()
 	sureBuf := time.Since(basla)
 
@@ -121,8 +121,8 @@ func ikiliVektorYazOku() {
 	fmt.Printf("[4] %s: %d bayt (beklenen: 8 + %d*%d*4 = %d)\n",
 		yol, bilgi.Size(), adet, boyut, 8+adet*boyut*4)
 
-	// Geri okuma: 500. vektöre doğrudan atlamak için Seek kullanıyoruz.
-	// Metin dosyasında bunu yapamazdık: satırların uzunluğu farklıdır.
+	// Geri okuma: 500. vektöre doğrudan atlamak için Seek kullanılmaktadır.
+	// Metin dosyasında bu mümkün olmazdı: satırların uzunlukları farklıdır.
 	f, err = os.Open(yol)
 	if err != nil {
 		panic(err)

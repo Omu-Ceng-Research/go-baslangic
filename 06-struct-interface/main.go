@@ -15,24 +15,24 @@ import (
 	"strings"
 )
 
-// Uye, kümedeki bir düğümü temsil eder.
+// Uye, kümedeki bir düğümü temsil etmektedir.
 type Uye struct {
 	Host  string
 	Port  int
 	Canli bool
 }
 
-// Değer alıcılı (value receiver) metot: Uye'nin kopyası üzerinde çalışır.
+// Değer alıcılı (value receiver) metot: Uye'nin kopyası üzerinde çalışmaktadır.
 func (u Uye) Adres() string {
 	return fmt.Sprintf("%s:%d", u.Host, u.Port)
 }
 
-// İşaretçi alıcılı (pointer receiver) metot: asıl nesneyi değiştirir.
+// İşaretçi alıcılı (pointer receiver) metot: asıl nesneyi değiştirmektedir.
 func (u *Uye) Oldur() {
 	u.Canli = false
 }
 
-// String() metodu olan her tip fmt ile yazdırılırken bu metodu kullanır
+// String() metodu olan her tip fmt ile yazdırılırken bu metodu kullanmaktadır
 // (Java'daki toString, Ruby'deki to_s).
 func (u Uye) String() string {
 	durum := "canlı"
@@ -43,8 +43,8 @@ func (u Uye) String() string {
 }
 
 // Depo, mesaj saklayabilen her şeyin sözleşmesidir.
-// Java'dan farkı: hiçbir tip "implements Depo" yazmaz.
-// Metotları taşıyan her tip otomatik olarak Depo sayılır.
+// Java'dan farkı şudur: hiçbir tip "implements Depo" yazmamaktadır.
+// Metotları taşıyan her tip otomatik olarak Depo sayılmaktadır.
 type Depo interface {
 	Kaydet(id string, veri []byte) error
 	Oku(id string) ([]byte, error)
@@ -72,17 +72,17 @@ func (d *BellekDepo) Oku(id string) ([]byte, error) {
 	return v, nil
 }
 
-// BuyukHarfDepo: başka bir Depo'yu sarmalayıp davranışını değiştirir.
-// Kalıtım yerine "gömme" (embedding) ve sarmalama kullanılır.
+// BuyukHarfDepo: başka bir Depo'yu sarmalayıp davranışını değiştirmektedir.
+// Kalıtım yerine "gömme" (embedding) ve sarmalama kullanılmaktadır.
 type BuyukHarfDepo struct {
-	Depo // gömülü alan: Oku metodu otomatik olarak buraya devredilir
+	Depo // gömülü alan: Oku metodu otomatik olarak buraya devredilmektedir
 }
 
 func (b BuyukHarfDepo) Kaydet(id string, veri []byte) error {
 	return b.Depo.Kaydet(id, []byte(strings.ToUpper(string(veri))))
 }
 
-// Bu fonksiyon hangi depoyla çalıştığını bilmez. Projede diskteki depo,
+// Bu fonksiyon hangi depoyla çalıştığını bilmemektedir. Projede diskteki depo,
 // ağ üzerindeki uzak depo vb. hepsi aynı arayüzle kullanılabilir.
 func dene(d Depo) {
 	_ = d.Kaydet("1", []byte("merhaba"))
@@ -112,4 +112,4 @@ func main() {
 }
 
 // ALIŞTIRMA: Depo arayüzüne uyan bir DosyaDepo yazın (ders 08'den sonra).
-// Her mesaj ayrı bir dosyada dursun. main'de dene(DosyaDepo{...}) çalışsın.
+// Her mesaj ayrı bir dosyada tutulmalı ve main içinde dene(DosyaDepo{...}) çalışmalıdır.

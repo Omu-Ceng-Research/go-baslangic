@@ -6,16 +6,16 @@
 //	go test -v ./15-test-benchmark                    (ayrıntılı)
 //	go test -bench . -benchmem ./15-test-benchmark    (benchmark)
 //
-// Go'da test için ayrı bir kütüphane (JUnit, RSpec) gerekmez. Dosya adı
-// _test.go ile biten dosyalar "go test" ile çalışır.
-// Projede ölçüm tablolarınızı büyük ölçüde benchmark'larla üreteceksiniz.
+// Go'da test için ayrı bir kütüphane (JUnit, RSpec) gerekmemektedir. Adı
+// _test.go ile biten dosyalar "go test" ile çalışmaktadır.
+// Projedeki ölçüm tabloları büyük ölçüde benchmark'larla üretilecektir.
 //
 // Bu klasör bir "main" paketi değil, bir kütüphane paketidir.
 package vektor
 
 import "math"
 
-// IcCarpim, iki vektörün iç çarpımını (dot product) hesaplar.
+// IcCarpim, iki vektörün iç çarpımını (dot product) hesaplamaktadır.
 func IcCarpim(a, b []float32) float32 {
 	var t float32
 	for i := range a {
@@ -24,9 +24,9 @@ func IcCarpim(a, b []float32) float32 {
 	return t
 }
 
-// IcCarpim4, aynı işi döngüyü 4'lü açarak (loop unrolling) yapar.
-// Sezgi: işlemci 4 bağımsız toplamı aynı anda yürütebilir, daha hızlı olmalı.
-// Gerçekten öyle mi? Tahmin etmeyin, benchmark söylesin.
+// IcCarpim4, aynı işi döngüyü 4'lü açarak (loop unrolling) yapmaktadır.
+// Sezgi: işlemci 4 bağımsız toplamı aynı anda yürütebilir, bu yüzden daha hızlı olması beklenir.
+// Gerçekten öyle midir? Tahmin etmeyin, benchmark ile ölçün.
 func IcCarpim4(a, b []float32) float32 {
 	var t0, t1, t2, t3 float32
 	n := len(a) &^ 3 // 4'ün katına yuvarla
@@ -45,7 +45,7 @@ func IcCarpim4(a, b []float32) float32 {
 // IcCarpim4SK, IcCarpim4'ün aynısıdır; tek farkı 4'lük alt dilimler almasıdır
 // (SK: sınır kontrolü).
 // Go her a[i] erişiminde "i dizinin içinde mi?" diye sınır kontrolü (bounds
-// check) yapar. Uzunluğu 4 olan bir alt dilimde derleyici bu kontrolleri
+// check) yapmaktadır. Uzunluğu 4 olan bir alt dilimde derleyici bu kontrolleri
 // döngü dışına alabilir.
 // Kontrolleri görmek için:
 //
@@ -67,8 +67,8 @@ func IcCarpim4SK(a, b []float32) float32 {
 	return t0 + t1 + t2 + t3
 }
 
-// Normallestir, vektörü birim uzunluğa getirir (yerinde değiştirir).
-// Sıfır vektör olduğu gibi bırakılır.
+// Normallestir, vektörü yerinde değiştirerek birim uzunluğa getirmektedir.
+// Sıfır vektör olduğu gibi bırakılmaktadır.
 func Normallestir(v []float32) {
 	var kare float64
 	for _, x := range v {

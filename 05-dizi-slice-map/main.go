@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	// 1) Dizi: boyutu tipin parçasıdır, sabittir. Nadiren doğrudan kullanılır.
+	// 1) Dizi: boyutu tipin parçasıdır, sabittir. Nadiren doğrudan kullanılmaktadır.
 	var vektor [4]float32 = [4]float32{0.1, 0.2, 0.3, 0.4}
 	fmt.Println("dizi:", vektor, "uzunluk:", len(vektor))
 
@@ -21,8 +21,8 @@ func main() {
 		fmt.Printf("len=%2d cap=%2d\n", len(s), cap(s)) // kapasite nasıl büyüyor?
 	}
 
-	// Önceden yer ayırmak (make) gereksiz kopyalamayı önler.
-	// Bir milyon vektör saklarken bu önemli olacak.
+	// Önceden yer ayırmak (make) gereksiz kopyalamayı önlemektedir.
+	// Bir milyon vektör saklanırken bu önemli olacaktır.
 	buyuk := make([]float32, 0, 1_000_000)
 	fmt.Println("make ile: len =", len(buyuk), "cap =", cap(buyuk))
 
@@ -65,7 +65,7 @@ func main() {
 		fmt.Println(k, "->", konumlar[k])
 	}
 
-	// 5) Yapı slice'ını özel bir kurala göre sıralama: top-k aramada kullanılacak.
+	// 5) Yapı slice'ını özel bir kurala göre sıralama: top-k aramada kullanılacaktır.
 	type sonuc struct {
 		id   int
 		skor float32

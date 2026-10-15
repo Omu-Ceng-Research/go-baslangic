@@ -28,7 +28,7 @@ func mesajGetir(id string) (string, error) {
 	veriler := map[string]string{"1": "merhaba", "2": "dünya"}
 	m, ok := veriler[id]
 	if !ok {
-		// %w ile hatayı "sarmalarız". Böylece üst katman kök nedeni görebilir.
+		// %w ile hata "sarmalanmaktadır". Böylece üst katman kök nedeni görebilir.
 		return "", fmt.Errorf("mesaj %s: %w", id, ErrBulunamadi)
 	}
 	return m, nil
@@ -68,7 +68,7 @@ func main() {
 
 	_, err := mesajGetir("99")
 	fmt.Println("hata:", err)
-	// errors.Is sarmalanmış hatanın içine bakar.
+	// errors.Is sarmalanmış hatanın içine bakmaktadır.
 	fmt.Println("bulunamadı hatası mı?", errors.Is(err, ErrBulunamadi))
 
 	k, id, g, err := komutAyristir("set 42 merhaba dünya")
@@ -82,7 +82,7 @@ func main() {
 	kare := func(x int) int { return x * x }
 	fmt.Println("kare(7) =", kare(7))
 
-	// Sistem çağrısı hataları da error olarak gelir.
+	// Sistem çağrısı hataları da error olarak gelmektedir.
 	// Altında hangi errno'nun olduğuna bakmak mümkündür.
 	_, err = os.Open("/olmayan/dosya")
 	fmt.Println("os.Open hatası:", err)

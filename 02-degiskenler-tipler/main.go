@@ -9,7 +9,7 @@ import (
 	"unicode/utf8"
 )
 
-// Sabitler. iota, C'deki enum gibi 0'dan artan değer üretir.
+// Sabitler. iota, C'deki enum gibi 0'dan artan değer üretmektedir.
 const (
 	Lider = iota // 0
 	Uye          // 1
@@ -24,17 +24,17 @@ func main() {
 	fmt.Println("a, b, c:", a, b, c)
 
 	// 2) Sıfır değerler: Go'da "ilklendirilmemiş" değişken yoktur.
-	// C'deki çöp değer ya da Java'daki null hatası yaşanmaz.
+	// C'deki çöp değer ya da Java'daki null hatası yaşanmamaktadır.
 	var i int
 	var f float64
 	var s string
 	var ok bool
 	fmt.Printf("sıfır değerler -> int:%d float:%g string:%q bool:%t\n", i, f, s, ok)
 
-	// 3) Boyutu belli tipler. Projede vektörleri float32 olarak tutacağız.
+	// 3) Boyutu belli tipler. Projede vektörler float32 olarak tutulacaktır.
 	var x int32 = 7
 	var y float32 = 0.5
-	// Go örtük tip dönüşümü YAPMAZ. Aşağıdaki satır derlenmez:
+	// Go örtük tip dönüşümü YAPMAMAKTADIR. Aşağıdaki satır derlenmemektedir:
 	//   z := x * y
 	z := float32(x) * y
 	fmt.Println("float32(x) * y =", z)
