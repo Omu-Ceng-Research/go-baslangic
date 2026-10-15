@@ -1,10 +1,10 @@
 # Go'ya Hızlı Başlangıç — Sistem Programlama
 
 Bu repo, C, Java ve Ruby bilen öğrencilerin **iki haftada** Go ile dönem ödevine hazır
-hâle gelmesi için yazılmış 15 küçük ders programını ve bunları çalıştıracağınız hazır bir
-Linux ortamını içerir. Her program tek başına çalışır.
+hâle gelmesi için yazılmış 15 küçük ders programını ve bunların çalıştırılacağı hazır bir
+Linux ortamını içermektedir. Her program tek başına çalıştırılabilmektedir.
 
-Derslerin ikinci yarısı (09–15) doğrudan ödevin parçalarına hazırlıktır: dosyayı `mmap`
+Derslerin ikinci yarısı (09–15) doğrudan ödevin parçalarına hazırlık niteliğindedir: dosyayı `mmap`
 ile okumak, `fsync` ile kalıcılık, ayrı bir process'i (model servisi) yönetmek, sinyaller,
 eşzamanlı sorgu ve ölçüm.
 
@@ -25,16 +25,16 @@ eşzamanlı sorgu ve ölçüm.
 
 ## 1. Neden Docker?
 
-Derslerin bir kısmı (09–12) yalnızca Linux'ta bulunan sistem çağrılarını kullanır.
-Sınıfta Windows, macOS ve Linux kullananlar var. Herkesin aynı sonucu görmesi için
-hepimiz Docker içinde **aynı Linux ortamında** çalışacağız. Go'yu ya da başka bir aracı
-ayrıca kurmanız gerekmez.
+Derslerin bir kısmı (09–12) yalnızca Linux'ta bulunan sistem çağrılarını kullanmaktadır.
+Sınıfta Windows, macOS ve Linux kullanan öğrenciler bulunmaktadır. Herkesin aynı sonucu
+görmesi için tüm çalışmalar Docker içinde **aynı Linux ortamında** yapılacaktır. Go'nun
+ya da başka bir aracın ayrıca kurulması gerekmemektedir.
 
 ## 2. Kurulum (bir kez)
 
 | Sistem | Kurulum |
 |---|---|
-| **Windows 10/11** | [Docker Desktop](https://www.docker.com/products/docker-desktop/)'ı kurun. Kurulumda **WSL 2** seçeneğini işaretli bırakın. Bilgisayar yeniden başlatma isteyebilir. |
+| **Windows 10/11** | [Docker Desktop](https://www.docker.com/products/docker-desktop/)'ı kurun. Kurulumda **WSL 2** seçeneğini işaretli bırakın. Kurulum sırasında bilgisayarın yeniden başlatılması gerekebilir. |
 | **macOS** (Intel ya da Apple M1–M4) | [Docker Desktop](https://www.docker.com/products/docker-desktop/) ya da daha hafif bir alternatif olan [OrbStack](https://orbstack.dev). |
 | **Linux** | `sudo apt install docker.io`, ardından `sudo usermod -aG docker $USER` ve oturumu kapatıp yeniden açın. |
 
@@ -44,11 +44,11 @@ Kontrol için bir terminalde şunu çalıştırın:
 docker run --rm hello-world
 ```
 
-`Hello from Docker!` yazısını görüyorsanız kurulum tamamdır.
+`Hello from Docker!` yazısı görüntüleniyorsa kurulum tamamlanmıştır.
 
 > [!IMPORTANT]
 > Docker Desktop'ta **Settings → Resources** bölümünden Docker'a **en az 4 GB bellek**
-> ayırın. Daha az bellekle model programları açılırken sessizce kapanır.
+> ayırın. Daha az bellekle model programları açılırken sessizce kapanmaktadır.
 
 Sonra bu repoyu indirin: sağ üstteki yeşil **Code** düğmesinden **Download ZIP** ya da
 
@@ -65,9 +65,9 @@ Docker Desktop açıkken, bu klasörün içinde:
 | Windows | `baslat.cmd` dosyasına **çift tıklayın** |
 | macOS / Linux | `./baslat.sh` |
 
-İlk seferde yaklaşık **900 MB** indirilir; bu birkaç dakika sürebilir. Sonraki açılışlar
-birkaç saniyedir. Açıldığında önünüzde bir Linux terminali olur; komutları buraya
-yazacaksınız.
+İlk çalıştırmada yaklaşık **900 MB** indirilmektedir; bu işlem birkaç dakika sürebilir.
+Sonraki açılışlar birkaç saniye sürmektedir. Ortam açıldığında bir Linux terminali
+görüntülenmektedir; komutlar bu terminale yazılmalıdır.
 
 ## 4. Konteynerin içinde sık kullanılan komutlar
 
@@ -82,13 +82,13 @@ exit                     # çık
 ```
 
 - **Kodu kendi bilgisayarınızdaki editörle** (VS Code, GoLand, Notepad++ vb.) bu klasörde
-  düzenleyin. Değişiklikler konteynerde anında görünür; `ders NN` ile yeniden çalıştırmanız
-  yeterli.
-- **İkinci terminal:** Bazı derslerde iki terminal gerekir (ör. ders 12'de `kill`, ders 14'te
-  `nc`). Başlatma scriptini (`baslat.cmd` / `baslat.sh`) bir kez daha çalıştırın; açık olan
-  ortama ikinci bir terminal açar.
-- `exit` ile çıktığınızda ortam kapanır. Kodunuz ve `/calisma` klasörü **silinmez**; bir
-  sonraki açılışta yerinde durur.
+  düzenleyin. Değişiklikler konteynerde anında görünmektedir; `ders NN` ile yeniden
+  çalıştırmanız yeterlidir.
+- **İkinci terminal:** Bazı derslerde iki terminal gerekmektedir (ör. ders 12'de `kill`, ders 14'te
+  `nc`). Başlatma scriptini (`baslat.cmd` / `baslat.sh`) bir kez daha çalıştırın; script açık olan
+  ortama ikinci bir terminal açmaktadır.
+- `exit` ile çıktığınızda ortam kapanmaktadır. Kodunuz ve `/calisma` klasörü
+  **silinmemektedir**; bir sonraki açılışta yerinde durmaktadır.
 
 ## 5. Her derste ne yapacaksınız?
 
@@ -98,7 +98,7 @@ exit                     # çık
 3. Dosyanın sonundaki **DENEYİN / SORULAR / ALIŞTIRMA** bölümlerini yapın.
 
 Ölçüm yapan derslerde (08, 10, 15) sonuçlar makineden makineye ve çalıştırmadan
-çalıştırmaya değişir. Tek ölçüme güvenmeyin; birkaç kez tekrarlayın
+çalıştırmaya değişmektedir. Tek ölçüme güvenmeyin; birkaç kez tekrarlayın
 (ör. `go test -bench . -count 5`).
 
 ## 6. Dersler
@@ -123,8 +123,8 @@ exit                     # çık
 
 ## 7. Ödev için modelli ortam
 
-Ödevde metinleri vektöre çeviren küçük bir yapay zekâ modeli kullanılacak. Koordinatör bu
-modeli kendi çocuk process'i olarak başlatır; bu yüzden model koordinatörle **aynı
+Ödevde metinleri vektöre çeviren küçük bir yapay zekâ modeli kullanılacaktır. Koordinatör
+bu modeli kendi çocuk process'i olarak başlatmaktadır; bu yüzden model koordinatörle **aynı
 imajda** olmalıdır. Model yalnızca **koordinatörü çalıştıracak makinede** gereklidir;
 grupta bir kişinin bilgisayarı yeterlidir.
 
@@ -135,7 +135,7 @@ grupta bir kişinin bilgisayarı yeterlidir.
 | `./baslat.sh llm` | `:llm` | + `model-uretici` (Qwen3.5-0.8B) | ~2,5 GB | Yalnızca cevap üretme bonusunu yapan grup |
 
 Windows'ta komut satırından: `baslat.cmd model` ya da `baslat.cmd llm`. Katmanlar ortak
-olduğu için büyük imajı indiren küçükleri de indirmiş olur.
+olduğundan büyük imajı indiren kullanıcı küçük imajları da indirmiş sayılmaktadır.
 
 İçine girince kurulumu doğrulayın:
 
@@ -143,8 +143,9 @@ olduğu için büyük imajı indiren küçükleri de indirmiş olur.
 model-kontrol
 ```
 
-En sonda `TAMAM` yazıyorsa bilgisayarınız modeli çalıştırabilir. **İlk hafta herkes bunu
-bir kez denesin;** grupta koordinatör makinesini buna göre seçeceksiniz.
+En sonda `TAMAM` yazıyorsa bilgisayarınız modeli çalıştırmaya uygundur. **İlk hafta
+herkesin bu kontrolü bir kez yapması önerilmektedir;** grupların koordinatör makinesi
+buna göre seçilmelidir.
 
 | Model | Görev | Bellek | Hız (1 cümle) | Lisans |
 |---|---|---|---|---|
@@ -159,8 +160,8 @@ bir kez denesin;** grupta koordinatör makinesini buna göre seçeceksiniz.
 | "Docker çalışmıyor" | Docker Desktop uygulamasını açın, motorun çalıştığını gösteren durumu bekleyin, sonra tekrar deneyin. |
 | Windows'ta "WSL 2 installation is incomplete" ya da benzeri | Yönetici olarak açılmış PowerShell'de `wsl --update`, sonra bilgisayarı yeniden başlatın. |
 | Windows'ta "Virtualization is not enabled" | BIOS/UEFI ayarlarında **Intel VT-x** ya da **AMD-V / SVM** seçeneğini açın. Bilgisayarınızın markasına göre arayın. |
-| İndirme çok yavaş ya da yarıda kesiliyor | Scripti tekrar çalıştırın; tamamlanmış parçalar yeniden indirilmez. Okul ağında herkes aynı anda indirirse yavaşlar; evde indirmeniz daha iyi olur. |
-| `model-kontrol` çalışırken `Killed` yazıp kapanıyor | Docker'a ayrılan bellek yetmiyor. **Settings → Resources → Memory** değerini en az 4 GB yapın, tarayıcı gibi büyük programları kapatıp tekrar deneyin. |
+| İndirme çok yavaş ya da yarıda kesiliyor | Scripti tekrar çalıştırın; tamamlanmış parçalar yeniden indirilmemektedir. Okul ağında herkes aynı anda indirdiğinde hız düşmektedir; indirmenin evde yapılması önerilmektedir. |
+| `model-kontrol` çalışırken `Killed` yazıp kapanıyor | Docker'a ayrılan bellek yetersizdir. **Settings → Resources → Memory** değerini en az 4 GB yapın, tarayıcı gibi büyük programları kapatıp tekrar deneyin. |
 | Ders 09–12 Windows'ta `go run` ile derlenmiyor | Normaldir; bu dersler yalnızca Linux içindir. Docker ortamının içinde `ders 09` ile çalıştırın. |
 | "Ders bulunamadı" | Ortamı bu klasörün içinden başlattığınızdan emin olun. |
 
@@ -173,29 +174,30 @@ kanalından sorun.
 ### VS Code ile (isteğe bağlı)
 
 "Dev Containers" eklentisini kurun, bu klasörü açın ve sağ alttaki **Reopen in Container**
-düğmesine basın. Editör, terminal ve Go eklentisi doğrudan konteynerin içinde çalışır.
+düğmesine basın. Editör, terminal ve Go eklentisi doğrudan konteynerin içinde çalışmaktadır.
 
 ### Docker yerine
 
 - **Windows, WSL2 + Ubuntu:** `wsl --install` ile Ubuntu kurup Go'yu oraya kurabilirsiniz.
-  Dosyaları `C:\` altında değil WSL'in kendi diskinde (`~/...`) tutun; yoksa ölçüm dersleri
-  yavaş ve yanıltıcı sonuç verir.
+  Dosyaları `C:\` altında değil WSL'in kendi diskinde (`~/...`) tutun; aksi hâlde ölçüm
+  dersleri yavaş ve yanıltıcı sonuç vermektedir.
 - **Linux:** Go'yu <https://go.dev/dl> adresinden kurup `go run ./01-merhaba` gibi doğrudan
   çalıştırabilirsiniz. `strace` paketini de kurun. Tüm dersleri derleyip etkileşimsiz
   olanları sırayla çalıştırmak için: `./kontrol.sh`
 
 ### Neden kod ve çıktılar ayrı yerde?
 
-Mac ve Windows'ta Docker'a bağlanan klasörler sanal bir paylaşım katmanından geçer ve
-yavaştır. Ders 08–10'daki ölçümler orada yapılırsa çekirdeğin page cache'i yerine bu
-katman ölçülür. `ders` komutu bu yüzden programları `/calisma`'da (gerçek Linux dosya
-sistemi) çalıştırır.
+Mac ve Windows'ta Docker'a bağlanan klasörler sanal bir paylaşım katmanından geçmektedir
+ve yavaştır. Ders 08–10'daki ölçümler orada yapılırsa çekirdeğin page cache'i yerine bu
+katman ölçülmüş olur. `ders` komutu bu yüzden programları `/calisma`'da (gerçek Linux
+dosya sistemi) çalıştırmaktadır.
 
 ### strace ile gözlem
 
 Sistem çağrısı derslerinde programı önce derleyin, sonra `strace` altında çalıştırın.
-`go run` ile çalıştırırsanız derleyicinin çağrılarını da görürsünüz. Docker'da `ders NN`
-derlemeyi sizin yerinize yapar; binary `/calisma/dNN` olarak durur.
+`go run` ile çalıştırıldığında derleyicinin çağrıları da görünmektedir. Docker'da
+`ders NN` derlemeyi sizin yerinize yapmaktadır; binary `/calisma/dNN` olarak
+saklanmaktadır.
 
 ```bash
 go build -o d10 ./10-mmap
@@ -223,10 +225,10 @@ Go runtime birden fazla thread kullandığı için `-f` bayrağı çoğu zaman g
 
 ### Bilinen sınırlar ve notlar
 
-- Ders 10'daki soğuk önbellek deneyi (`drop_caches`) konteynerde çalışmaz; çekirdek ayarı
+- Ders 10'daki soğuk önbellek deneyi (`drop_caches`) konteynerde çalışmamaktadır; çekirdek ayarı
   konteynerin dışındadır. WSL2 ya da gerçek Linux'ta `sudo` ile yapılabilir.
 - Programlar çalıştıkları klasöre `ders08-cikti/`, `ders10-vektorler.f32` gibi dosyalar
-  üretir. Bunlar `.gitignore` içindedir; silmek serbesttir.
+  üretmektedir. Bu dosyalar `.gitignore` içinde yer almaktadır ve silinebilir.
 - `nc -q1` bayrağı Debian/Ubuntu'daki `netcat-openbsd` içindir. Başka bir `nc` sürümünde
   `-q1` yerine `-N` gerekebilir.
 - İmajın yeni sürümünü almak için:
@@ -240,10 +242,10 @@ Go runtime birden fazla thread kullandığı için `-f` bayrağı çoğu zaman g
 | `baslat.cmd`, `baslat.ps1`, `baslat.sh` | Ortamı başlatan scriptler |
 | `docker/` | Ortamın tarifi (dokunmanız gerekmez) |
 | `.devcontainer/` | VS Code "Dev Containers" ayarı |
-| `kontrol.sh` | Bütün dersleri sırayla derleyip denetler |
+| `kontrol.sh` | Bütün dersleri sırayla derleyip denetlemektedir |
 
-Bu klasördeki dosyaları silmeyin ya da yeniden adlandırmayın; başlatma scriptleri onları
-bu adlarla arar.
+Bu klasördeki dosyaları silmeyin ya da yeniden adlandırmayın; başlatma scriptleri
+onları bu adlarla aramaktadır.
 
 ## Lisans
 
